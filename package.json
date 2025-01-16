@@ -1,19 +1,22 @@
 {
   "name": "rich",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chingyuan2011/rich.git"
+  "dependencies": {
+    "google-spreadsheet": "^4.1.4",
+    "lodash": "^4.17.21",
+    "pinia": "^2.2.4",
+    "vue": "^3.5.10",
+    "vue-router": "^4.4.5"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/chingyuan2011/rich/issues"
-  },
-  "homepage": "https://github.com/chingyuan2011/rich#readme"
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.4",
+    "vite": "^5.4.8"
+  }
 }
