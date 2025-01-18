@@ -1,31 +1,30 @@
 <script setup>
 import { ref, computed } from "vue";
-import { get, isEmpty } from "lodash";
+import { get } from "lodash";
 import {cardHandler} from "./cardHandler.js"
-// import { useIndexStore } from "@/stores/index/index.js";
 
-// const store = useIndexStore();
-// const { getRoleData } = store;
-const {cardMap} = cardHandler()
+const {getConfig} = cardHandler()
 const inputValue = ref("");
-// const roleData = ref(null);
-// const search = () => {
-//   roleData.value = getRoleData(inputValue.value);
-// };
-
-// const cards = computed(() => {
-//   const _cards = get(roleData.value, "cards", null);
-//   return !isEmpty(_cards) ? _cards : null;
-// });
-
+const roleData = ref(null);
 const nameConfig = ref({
   guide: "Ray、宥安、冬冬、汪汪",
   member: "鳳君、桔子、佩婷、喬涵",
 });
+
+const search = () => {
+  roleData.value = getConfig(inputValue.value);
+};
+
+const cards = computed(() => {
+  const _commonCards = get(roleData.value, "commonCards", []);
+  const _defaultCards = get(roleData.value, "defaultCards", []);
+  const _cards = get(roleData.value, "cards", []);
+  return [..._commonCards, ..._defaultCards, ..._cards]
+});
 </script>
 
 <template>
-  <div class="ThanksPage">
+  <div class="ThanksPage-rich23">
     <div class="bg">
       <div class="glass"></div>
     </div>
@@ -40,9 +39,8 @@ const nameConfig = ref({
         <button @click="search">查詢</button>
       </div>
       <p class="searchNote">請輸入姓名和手機末3碼(例如：楊大原123）</p>
-      <pre>{{ cardMap }}</pre>
-      <!-- <p class="roleData" v-if="roleData">
-        {{ roleData.role.name }} ，您共有 {{ cards ? cards.length : 0 }} 則感恩小卡
+      <p class="roleData" v-if="roleData">
+        {{ roleData?.name }} ，您共有 {{ cards ? cards.length : 0 }} 則感恩小卡
       </p>
       <div class="cards" v-if="cards">
         <div
@@ -56,10 +54,10 @@ const nameConfig = ref({
           <div class="content">
             <p>{{ item.content }}</p>
           </div>
-          <p class="fromName">{{ item.from }}</p>
+          <p class="fromName">{{ item.fromName }}</p>
         </div>
       </div>
-      <p class="note" v-else>輸入資訊開始查詢</p> -->
+      <p class="note" v-else>輸入資訊開始查詢</p>
       <p class="group">
         主辦：輕易豐盛<br />
         指導成員：{{ nameConfig.guide }}<br />
@@ -72,7 +70,7 @@ const nameConfig = ref({
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Matemasie&family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&display=swap");
 
-.ThanksPage {
+.ThanksPage-rich23 {
   width: 100%;
   position: relative;
   padding-bottom: 0px;

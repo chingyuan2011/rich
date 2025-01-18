@@ -1,5 +1,5 @@
 import { ref, onMounted, computed } from "vue";
-import {cloneDeep} from 'lodash'
+import { get, cloneDeep } from "lodash";
 import { useGoogleSheet } from "@/composables/useGoogleSheet/index.js";
 
 export const cardHandler = () => {
@@ -11,70 +11,77 @@ export const cardHandler = () => {
   const roleData = ref([]);
 
   const defaultCardMap = computed(() => {
-    const tempCardData = cloneDeep(defaultCard.value)
-    tempCardData.shift()
+    const tempCardData = cloneDeep(defaultCard.value);
+    tempCardData.shift();
 
-    const result = tempCardData.reduce(
-      (acc, curVal) => {
-        const nCardMap = transformCard(curVal);
-        Object.keys(nCardMap).forEach((key) => {
-          if (!acc[key]) {
-            acc[key] = {
-              role: [],
-              name: key,
-              cards: [],
-            };
-          }
-          acc[key].cards.push(nCardMap[key]);
-        });
+    const result = tempCardData.reduce((acc, curVal) => {
+      const fromName = curVal[0];
+      const content = curVal[1];
+      const role = curVal[2];
+      if (!acc[role]) {
+        acc[role] = [];
+      }
+      acc[role].push({
+        fromName,
+        content,
+      });
 
-        return acc;
-      },
-      {}
-    );
-
-    return result;
-  })
-
-  const cardMap = computed(() => {
-    const tempCardData = cloneDeep(cardData.value)
-    tempCardData.shift()
-    const result = tempCardData.reduce(
-      (acc, curVal) => {
-        const nCardMap = transformCard(curVal);
-        Object.keys(nCardMap).forEach((key) => {
-            if(!acc[key]) {
-                acc[key] = {
-                    role: [],
-                    name: key,
-                    cards: []
-                }
-            }
-            acc[key].cards.push(nCardMap[key])
-        })
-
-        return acc;
-      },
-      {}
-    );
-
-    setRole(result)
+      return acc;
+    }, {});
 
     return result;
   });
 
-  const setRole = (cardMap) => {
-    console.log(defaultCardMap.value, roleData.value)
-    const tempRoleData = cloneDeep(roleData.value)
-    tempRoleData.shift()
+  const cardMap = computed(() => {
+    const tempCardData = cloneDeep(cardData.value);
+    tempCardData.shift();
+    const result = tempCardData.reduce((acc, curVal) => {
+      const nCardMap = transformCard(curVal);
+      Object.keys(nCardMap).forEach((key) => {
+        if (!acc[key]) {
+          acc[key] = getInitCard(key);
+        }
+        acc[key].cards.push(nCardMap[key]);
+      });
+      return acc;
+    }, {});
+
+    setRoleConfig(result);
+
+    return result;
+  });
+
+  const getInitCard = (name) => {
+    const result = {
+      name,
+      role: [],
+      defaultCards: [],
+      cards: [],
+      commonCards: commonCards.value
+    };
+    
+    return result;
+  };
+
+  const setRoleConfig = (configMap) => {
+    const tempRoleData = cloneDeep(roleData.value);
+    tempRoleData.shift();
     tempRoleData.forEach((data) => {
       const [role, ...rest] = data;
-    //   console.log(role, rest)
-    //   if(cardMap[`${group}${name}`]) {
-    //     cardMap[`${group}${name}`].role = role
-    //   }
-    })
-  }
+      const roleCards = defaultCardMap.value[role] || [];
+      rest.forEach((name) => {
+        const config = configMap[`${name}`];
+        if (!config) configMap[name] = getInitCard(name);
+        configMap[name].defaultCards.push(...roleCards);
+      });
+    });
+  };
+
+  const commonCards = computed(() => {
+    const result = []
+    defaultCardMap.value["所有人"] && result.push(...defaultCardMap.value["所有人"])
+    return result
+  })
 
   const transformCard = (cardData) => {
     const result = {};
@@ -105,6 +112,20 @@ export const cardHandler = () => {
     return result;
   };
 
+  const getConfig = (value) => {
+    const result = get(cardMap.value, value, null);
+    if(result)  return cloneDeep(result);
+     else {
+      return {
+        name: value,
+        role: [],
+        defaultCards: [],
+        cards: [],
+        commonCards: commonCards.value
+      }
+    }
+  };
+
   onMounted(async () => {
     cardData.value = await getSheetData({
       sheetID,
@@ -121,6 +142,6 @@ export const cardHandler = () => {
   });
 
   return {
-    cardMap,
+    getConfig,    
   };
 };
