@@ -8,10 +8,11 @@ const inputValue = ref("");
 const roleData = ref(null);
 const nameConfig = ref({
   guide: "Ray、宥安、冬冬、汪汪",
-  member: "鳳君、桔子、佩婷、喬涵",
+  member: "鳳君、桔子、佩婷、喬涵、青原",
 });
 
 const search = () => {
+  if(!inputValue.value) return
   roleData.value = getConfig(inputValue.value);
 };
 
@@ -38,7 +39,7 @@ const cards = computed(() => {
         <input v-model="inputValue" />
         <button @click="search">查詢</button>
       </div>
-      <p class="searchNote">請輸入姓名和手機末3碼(例如：楊大原123）</p>
+      <p class="searchNote">請輸入戰隊數字和本名(例如：13楊大原）</p>
       <p class="roleData" v-if="roleData">
         {{ roleData?.name }} ，您共有 {{ cards ? cards.length : 0 }} 則感恩小卡
       </p>
