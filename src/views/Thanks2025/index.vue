@@ -105,6 +105,7 @@ onUnmounted(() => {
   height: 100%;
   flex-grow: 1;
   background-position: center;
+  background-size: cover;
 }
 
 .filter {
@@ -114,7 +115,7 @@ onUnmounted(() => {
   right: 0;
   bottom: 0;
   background-color: #000000;
-  opacity: 0.7;
+  opacity: 0.4;
 }
 .content {
   padding: 5% 10%;
