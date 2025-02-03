@@ -2,7 +2,6 @@ import {
     createRouter, 
     createWebHistory 
   } from 'vue-router'
-  import Rich23 from '@/views/Rich23/index.vue'
   
   const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,7 +9,12 @@ import {
       {
         path: '/rich23',
         name: 'rich23',
-        component: Rich23
+        component: () => import('@/views/Rich23/index.vue')
+      },
+      {
+        path: '/thanks2025',
+        name: 'thanks2025',
+        component: () => import('@/views/Thanks2025/index.vue')
       },
       {
         path: '/:pathMatch(.*)*',
