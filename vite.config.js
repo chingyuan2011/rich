@@ -13,6 +13,7 @@ export default defineConfig({
       input: {
         index: resolve(__dirname, 'rich23.html'),
         thanks2025: resolve(__dirname, 'thanks2025.html'),
+        plus1: resolve(__dirname, 'plus1.html'),
       }
     }
   },
