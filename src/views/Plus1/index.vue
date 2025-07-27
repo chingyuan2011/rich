@@ -82,6 +82,7 @@ const cards = computed(() => {
   background-color: rgb(248, 195, 205);
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-image: url(/imgs/rich23/texture.png);

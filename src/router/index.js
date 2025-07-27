@@ -22,6 +22,11 @@ import {
         component: () => import('@/views/Plus1/index.vue')
       },
       {
+        path: '/plus2',
+        name: 'plus2',
+        component: () => import('@/views/Plus2/index.vue')
+      },
+      {
         path: '/:pathMatch(.*)*',
         redirect: {
           name: 'rich23',

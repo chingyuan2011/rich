@@ -8,7 +8,7 @@ const inputValue = ref("");
 const roleData = ref(null);
 const nameConfig = ref({
   guide: "Ray、宥安、冬冬、汪汪",
-  member: "鳳君、桔子、佩婷、喬涵、青原",
+  member: "桔子、青原",
 });
 
 const search = () => {
@@ -25,13 +25,13 @@ const cards = computed(() => {
 </script>
 
 <template>
-  <div class="ThanksPage-rich23">
+  <div class="ThanksPage-Plus2">
     <div class="bg">
       <div class="glass"></div>
     </div>
     <div class="container">
       <h1 class="matemasie-regular">
-        [影響力 23 班]
+        [影響力 超2班]
         <br />
         畢業季感恩活動
       </h1>
@@ -39,7 +39,7 @@ const cards = computed(() => {
         <input v-model="inputValue" />
         <button @click="search">查詢</button>
       </div>
-      <p class="searchNote">請輸入戰隊數字和本名(例如：13楊大原）</p>
+      <p class="searchNote">請輸入戰隊數字和本名(例如：16楊大原）</p>
       <p class="roleData" v-if="roleData">
         {{ roleData?.name }} ，您共有 {{ cards ? cards.length : 0 }} 則感恩小卡
       </p>
@@ -71,7 +71,7 @@ const cards = computed(() => {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Matemasie&family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&display=swap");
 
-.ThanksPage-rich23 {
+.ThanksPage-Plus2 {
   width: 100%;
   position: relative;
   padding-bottom: 0px;
@@ -89,6 +89,7 @@ const cards = computed(() => {
 }
 
 .container {
+  width: 100%;
   max-width: 830px;
   margin: 0 auto;
 }
@@ -209,4 +210,4 @@ p {
     transform: translateY(0px);
   }
 }
-</style>
+</style> 
