@@ -11,10 +11,8 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        index: resolve(__dirname, 'rich23.html'),
-        thanks2025: resolve(__dirname, 'thanks2025.html'),
-        plus1: resolve(__dirname, 'plus1.html'),
-        plus2: resolve(__dirname, 'plus2.html')
+        thanks2025: resolve(__dirname, 'thanks2025.html'),        
+        plus3: resolve(__dirname, 'plus3.html')
       }
     }
   },
