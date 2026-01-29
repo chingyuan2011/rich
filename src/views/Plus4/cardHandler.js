@@ -3,7 +3,7 @@ import { get, cloneDeep } from "lodash";
 import { useGoogleSheet } from "@/composables/useGoogleSheet/index.js";
 
 export const cardHandler = () => {
-  const sheetID = "14qc_GUoLQKOkvHEPx_DKRTh3ecIHCENkRV9PPfY3CeY";
+  const sheetID = "148F-oQqiPuJvD7h1vXLP6xM5r7LUHJsZy-2Elp7tzVc";
 
   const { getSheetData } = useGoogleSheet();
   const cardData = ref([]);

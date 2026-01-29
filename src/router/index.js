@@ -7,9 +7,9 @@ import {
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
       {
-        path: '/plus3',
-        name: 'plus3',
-        component: () => import('@/views/Plus3/index.vue')
+        path: '/plus4',
+        name: 'plus4',
+        component: () => import('@/views/Plus4/index.vue')
       },
       {
         path: '/:pathMatch(.*)*',

@@ -7,8 +7,7 @@ const {getConfig} = cardHandler()
 const inputValue = ref("");
 const roleData = ref(null);
 const nameConfig = ref({
-  guide: "Ray、宥安、冬冬、汪汪",
-  member: "桔子、青原",
+  guide: "Ray、宥安"
 });
 
 const search = () => {
@@ -22,16 +21,23 @@ const cards = computed(() => {
   const _cards = get(roleData.value, "cards", []);
   return [..._commonCards, ..._defaultCards, ..._cards]
 });
+const name = computed(() => {
+  const originName = get(roleData.value, "name", "");
+  // 把前面的數字刪掉，例如 0Jamie -> Jamie
+  const nameWithoutNumber = originName.replace(/^\d+/, "");
+
+  return nameWithoutNumber;
+});
 </script>
 
 <template>
-  <div class="ThanksPage-Plus2">
+  <div class="ThanksPage-Plus4">
     <div class="bg">
       <div class="glass"></div>
     </div>
     <div class="container">
       <h1 class="matemasie-regular">
-        [影響力 超3班]
+        [影響力 超4班]
         <br />
         畢業季感恩活動
       </h1>
@@ -39,9 +45,9 @@ const cards = computed(() => {
         <input v-model="inputValue" />
         <button @click="search">查詢</button>
       </div>
-      <p class="searchNote">請輸入戰隊數字和本名(例如：17楊大原）</p>
+      <p class="searchNote">請輸入戰隊數字和本名(例如：15楊大原）</p>
       <p class="roleData" v-if="roleData">
-        {{ roleData?.name }} ，您共有 {{ cards ? cards.length : 0 }} 則感恩小卡
+        {{ name }} ，您共有 {{ cards ? cards.length : 0 }} 則感恩小卡
       </p>
       <div class="cards" v-if="cards">
         <div
@@ -61,8 +67,7 @@ const cards = computed(() => {
       <p class="note" v-else>輸入資訊開始查詢</p>
       <p class="group">
         主辦：輕易豐盛<br />
-        指導成員：{{ nameConfig.guide }}<br />
-        協作成員：{{nameConfig.member}}
+        指導成員：{{ nameConfig.guide }}
       </p>
     </div>
   </div>
@@ -71,7 +76,7 @@ const cards = computed(() => {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Matemasie&family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&display=swap");
 
-.ThanksPage-Plus2 {
+.ThanksPage-Plus4 {
   width: 100%;
   position: relative;
   padding-bottom: 0px;

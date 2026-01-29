@@ -11,8 +11,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        thanks2025: resolve(__dirname, 'thanks2025.html'),        
-        plus3: resolve(__dirname, 'plus3.html')
+        plus3: resolve(__dirname, 'plus4.html')
       }
     }
   },
