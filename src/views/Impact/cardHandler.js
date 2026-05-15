@@ -2,13 +2,24 @@ import { ref, onMounted, computed } from "vue";
 import { get, cloneDeep } from "lodash";
 import { useGoogleSheet } from "@/composables/useGoogleSheet/index.js";
 
-export const cardHandler = () => {
-  const sheetID = "148F-oQqiPuJvD7h1vXLP6xM5r7LUHJsZy-2Elp7tzVc";
-
+export const cardHandler = (sheetId) => {
   const { getSheetData } = useGoogleSheet();
   const cardData = ref([]);
   const defaultCard = ref([]);
   const roleData = ref([]);
+  const pageConfig = ref([]);
+
+  const pageData = computed(() => {
+    const result = {
+      title: get(pageConfig.value, "0.1", ""),
+      subTitle: get(pageConfig.value, "1.1", ""),
+      description: get(pageConfig.value, "2.1", ""),
+      owner: get(pageConfig.value, "3.1", ""),
+      contributor: get(pageConfig.value, "4.1", ""),
+    };
+
+    return result;
+  });
 
   const defaultCardMap = computed(() => {
     const tempCardData = cloneDeep(defaultCard.value);
@@ -126,22 +137,32 @@ export const cardHandler = () => {
     }
   };
 
-  onMounted(async () => {
-    cardData.value = await getSheetData({
-      sheetID,
+  const getData = async ({ sheetId }) => {
+     cardData.value = await getSheetData({
+      sheetID: sheetId,
       name: "感恩小卡",
     });
     defaultCard.value = await getSheetData({
-      sheetID,
+      sheetID: sheetId,
       name: "預設卡片",
     });
     roleData.value = await getSheetData({
-      sheetID,
+      sheetID: sheetId,
       name: "身份群組",
     });
+    pageConfig.value = await getSheetData({
+      sheetID: sheetId,
+      name: "頁面設定",
+    });
+  };
+
+  onMounted(async () => {
+  
   });
 
   return {
-    getConfig,    
+    getConfig,  
+    pageData,
+    getData
   };
 }; 

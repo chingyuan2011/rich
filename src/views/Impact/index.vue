@@ -1,9 +1,11 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { get } from "lodash";
 import {cardHandler} from "./cardHandler.js"
 
-const {getConfig} = cardHandler()
+// 1d4j3wZTTH9TuvjfO_Lx7VPP3LYsFtIwZwA_P6dyfmvk
+
+const {getConfig, pageData, getData} = cardHandler('148F-oQqiPuJvD7h1vXLP6xM5r7LUHJsZy-2Elp7tzVc');
 const inputValue = ref("");
 const roleData = ref(null);
 const nameConfig = ref({
@@ -28,6 +30,18 @@ const name = computed(() => {
 
   return nameWithoutNumber;
 });
+
+onMounted(async () => {
+  // 取得 query 的 sheetId 參數
+  const urlParams = await new URLSearchParams(window.location.search);
+  const sheetId = urlParams.get("sheetId");
+  
+  if (sheetId) {
+    getData({ sheetId });
+  } else {
+    alert("缺少網頁參數")
+  }
+});
 </script>
 
 <template>
@@ -37,15 +51,15 @@ const name = computed(() => {
     </div>
     <div class="container">
       <h1 class="matemasie-regular">
-        [影響力 超4班]
+        {{ pageData.title }}
         <br />
-        畢業季感恩活動
+        {{ pageData.subTitle }}
       </h1>
       <div class="searchBar">
         <input v-model="inputValue" />
         <button @click="search">查詢</button>
       </div>
-      <p class="searchNote">請輸入戰隊數字和本名(例如：15楊大原）</p>
+      <p class="searchNote">{{ pageData.description }}</p>
       <p class="roleData" v-if="roleData">
         {{ name }} ，您共有 {{ cards ? cards.length : 0 }} 則感恩小卡
       </p>
@@ -66,8 +80,8 @@ const name = computed(() => {
       </div>
       <p class="note" v-else>輸入資訊開始查詢</p>
       <p class="group">
-        主辦：輕易豐盛<br />
-        指導成員：{{ nameConfig.guide }}
+        主辦：{{ pageData.owner}}<br />
+        指導成員：{{ pageData.contributor }}
       </p>
     </div>
   </div>

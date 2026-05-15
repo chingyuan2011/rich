@@ -7,14 +7,14 @@ import {
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
       {
-        path: '/plus4',
-        name: 'plus4',
-        component: () => import('@/views/Plus4/index.vue')
+        path: '/impact',
+        name: 'impact',
+        component: () => import('@/views/Impact/index.vue')
       },
       {
         path: '/:pathMatch(.*)*',
         redirect: {
-          name: 'plus3',
+          name: 'impact',
           params: {} 
         } 
       }
