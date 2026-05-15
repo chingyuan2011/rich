@@ -11,7 +11,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        plus3: resolve(__dirname, 'plus4.html')
+        impact: resolve(__dirname, 'impact.html')
       }
     }
   },
